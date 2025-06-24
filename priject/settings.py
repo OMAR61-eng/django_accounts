@@ -122,3 +122,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailBackend',  # Custom authentication backend for email login  
+    'django.contrib.auth.backends.ModelBackend',  # Default backend for username login
+]

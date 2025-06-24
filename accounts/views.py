@@ -23,13 +23,13 @@ def signup(request):
 
 
 def profile(request):
-    profile = Profile.objects.get(user=request.user)
+    profile, created = Profile.objects.get_or_create(user=request.user)
     return render(request, 'profile/profile.html', {'profile': profile})
 
 def profile_update(request):
-    profile = Profile.objects.get(user=request.user)
+    profile, created = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
-        userform= UserForm(request.POST, instance=request.user)
+        userform = UserForm(request.POST, instance=request.user)
         profileform = ProfileForm(request.POST, instance=profile)
         if userform.is_valid() and profileform.is_valid():
             userform.save()
@@ -38,6 +38,6 @@ def profile_update(request):
             my_profile.save()
             return redirect('/accounts/profile/')
     else:
-        userform= UserForm(instance=request.user)
+        userform = UserForm(instance=request.user)
         profileform = ProfileForm(instance=profile)
-    return render(request, 'profile/profile_update.html',{'userform': userform, 'profileform': profileform})
+    return render(request, 'profile/profile_update.html', {'userform': userform, 'profileform': profileform})
